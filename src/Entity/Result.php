@@ -116,4 +116,19 @@ class Result implements JsonSerializable, Stringable
             'time'   => $this->time->format('Y-m-d H:i:s')
         ];
     }
+
+    public function setResult(int $result): void
+    {
+        $this->result = $result;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function setTime(DateTime $time): void
+    {
+        $this->time = $time;
+    }
 }
