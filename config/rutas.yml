@@ -1,19 +1,19 @@
 # rutas.yml
 ---
-ruta_raíz:
+root_route:
     path:     /
-    controller: 'funcionHomePage'
+    controller: 'homePageFunction'
     methods:   [ GET ]
 
-ruta_user_list:
+user_list_route:
     path:     /users
-    controller: 'funcionListadoUsuarios'
+    controller: 'listUsersFunction'
     methods:
-      - GET
+        - GET
 
-ruta_user:
+user_route:
     path:     /users/{name}
-    controller: 'funcionUsuario'
+    controller: 'userFunction'
     defaults:
         name: _default_
     methods:

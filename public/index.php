@@ -19,28 +19,28 @@ use Symfony\Component\Routing\RequestContext;
 
 Utils::loadEnv(dirname(__DIR__));
 
-// Empleando el componente symfony/config cargamos todas las rutas
+// Using the symfony/config component to load all routes
 $locator = new FileLocator([ dirname(__DIR__) . '/' . $_ENV['CONFIG_DIR'] ]);
 $loader  = new YamlFileLoader($locator);
 $routes  = $loader->load($_ENV['ROUTES_FILE']);
 
-// obtenemos el contexto de la petición HTTP
+// Get the HTTP request context
 $context = new RequestContext(
     $_SERVER['REQUEST_URI'],
     $_SERVER['REQUEST_METHOD']
 );
 
-// Obtiene el objeto matcher para la resolución de rutas
+// Get the matcher object for route resolution
 $matcher = new UrlMatcher($routes, $context);
 
-// Obtenemos la información asociada a la petición
+// Get the information associated with the request
 $path_info = $_SERVER['REQUEST_URI'] ?? '/';
 
 try {
     $parameters = $matcher->match($path_info);
     $action = $parameters['_controller'];
     $param1 = $parameters['name'] ?? null;
-    $action($param1);   # ejecutar la acción $action()?
+    $action($param1);   // execute the action $action()?
 
     // echo '<pre>', var_dump($parameters), '</pre>';
 } catch (ResourceNotFoundException $e) {
@@ -49,7 +49,7 @@ try {
     echo 'Caught exception: the resource was found but the request method is not allowed' . PHP_EOL;
 }
 
-// El componente también sirve para mostrar la información de una ruta a través de su nombre
-// echo '<br>---' . PHP_EOL . '<pre>Inverso "ruta_admin": ';
-// var_dump($routes->get('ruta_admin')->getPath());
+// The component also serves to display route information by its name
+// echo '<br>---' . PHP_EOL . '<pre>Inverse "admin_route": ';
+// var_dump($routes->get('admin_route')->getPath());
 // echo '</pre>';
