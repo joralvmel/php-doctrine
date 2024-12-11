@@ -11,6 +11,11 @@ user_list_route:
     methods:
         - GET
 
+user_create_route:
+    path: /users/create
+    controller: 'createUserFunction'
+    methods: [ GET, POST ]
+
 user_route:
     path:     /users/{name}
     controller: 'userFunction'

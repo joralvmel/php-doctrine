@@ -16,9 +16,11 @@ function homePageFunction(): void
 
     $listRoute = $routes->get('user_list_route')->getPath();
     $userRoute = $routes->get('user_route')->getPath();
+    $createRoute = $routes->get('user_create_route')->getPath();
     echo <<< MARCA_FIN
     <ul>
         <li><a href="$listRoute">User List</a></li>
+          <li><a href="{$createRoute}">Crete User</a></li>
     </ul>
     <form action="$userRoute" method="get">
         <label for="username">Search User by Name:</label>
@@ -71,4 +73,27 @@ function userFunction(): void
     echo '<td>' . $user->getEmail() . '</td>';
     echo '</tr>';
     echo '</table>';
+}
+
+function createUserFunction(): void
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $entityManager = DoctrineConnector::getEntityManager();
+        $user = new User();
+        $user->setUsername($_POST['username']);
+        $user->setEmail($_POST['email']);
+        $user->setPassword($_POST['password']);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        echo 'Usuario creado con éxito';
+    } else {
+        echo <<<FORM
+        <form method="post" action="/users/create">
+            Username: <input type="text" name="username"><br>
+            Email: <input type="text" name="email"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="submit" value="Crear Usuario">
+        </form>
+        FORM;
+    }
 }
