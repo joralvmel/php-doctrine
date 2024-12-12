@@ -21,6 +21,8 @@ function createUserFunction(): void
         $user->setUsername($_POST['username']);
         $user->setEmail($_POST['email']);
         $user->setPassword($_POST['password']);
+        $user->setEnabled(true);
+        $user->setIsAdmin(false);
         $entityManager->persist($user);
         $entityManager->flush();
         echo 'User created successfully with ID: ' . $user->getId();
