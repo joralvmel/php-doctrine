@@ -23,9 +23,14 @@ user_route:
         name: _default_
     methods:
         - GET
-        - DELETE
+
 
 user_update_route:
     path: /users/update/{id}
     controller: 'updateUserFunction'
     methods: [ GET, POST ]
+
+user_delete_route:
+    path: /users/delete/{id}
+    controller: 'deleteUserFunction'
+    methods: [ DELETE, POST ]
