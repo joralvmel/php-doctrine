@@ -39,10 +39,13 @@ $path_info = $_SERVER['REQUEST_URI'] ?? '/';
 try {
     $parameters = $matcher->match($path_info);
     $action = $parameters['_controller'];
-    $param1 = $parameters['name'] ?? null;
-    $action($param1);   // execute the action $action()?
 
-    // echo '<pre>', var_dump($parameters), '</pre>';
+    // Remove extra parameters that are not part of the route
+    unset($parameters['_controller'], $parameters['_route']);
+
+    // Call the controller action with route parameters
+    call_user_func_array($action, $parameters);
+
 } catch (ResourceNotFoundException $e) {
     echo 'Caught exception: The resource could not be found' . PHP_EOL;
 } catch (MethodNotAllowedException $e) {

@@ -24,3 +24,8 @@ user_route:
     methods:
         - GET
         - DELETE
+
+user_update_route:
+    path: /users/update/{id}
+    controller: 'updateUserFunction'
+    methods: [ GET, POST ]
