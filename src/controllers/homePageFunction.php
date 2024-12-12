@@ -17,10 +17,10 @@ function homePageFunction(): void
         <title>Home Page</title>
     </head>
     <body>
-    <ul>
-        <li><a href="$listUserRoute">User List</a></li>
-        <li><a href="$listResultRoute">Result List</a></li>
-    </ul>
+    <div>
+        <button onclick="location.href='/users'">User List</button>
+        <button onclick="location.href='/results'">Result List</button>
+    </div>
     </body>
     </html>
 HTML;
