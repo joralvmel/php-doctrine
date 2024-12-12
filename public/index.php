@@ -8,7 +8,17 @@
  */
 
 require dirname(__DIR__) . '/vendor/autoload.php';
-require_once dirname(__DIR__) . '/src/controllers.php';
+require_once dirname(__DIR__) . '/src/controllers/homePageFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/listUsersFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/userFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/createUserFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/updateUserFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/deleteUserFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/listResultsFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/resultFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/createResultFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/updateResultFunction.php';
+require_once dirname(__DIR__) . '/src/controllers/deleteResultFunction.php';
 
 use MiW\Results\Utility\Utils;
 use Symfony\Component\Config\FileLocator;
@@ -51,8 +61,3 @@ try {
 } catch (MethodNotAllowedException $e) {
     echo 'Caught exception: the resource was found but the request method is not allowed' . PHP_EOL;
 }
-
-// The component also serves to display route information by its name
-// echo '<br>---' . PHP_EOL . '<pre>Inverse "admin_route": ';
-// var_dump($routes->get('admin_route')->getPath());
-// echo '</pre>';
