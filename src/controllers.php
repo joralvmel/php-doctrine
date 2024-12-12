@@ -43,7 +43,9 @@ function listUsersFunction(): void
         echo '<td>
         <button onclick="location.href=\'' . $viewUrl . '\'">Read</button>
         <button onclick="location.href=\'' . $updateUrl . '\'">Update</button>
-        <button onclick="if(confirm(\'Are you sure you want to delete this user?\')) location.href=\'' . $deleteUrl . '\'">Delete</button>
+        <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm(\'Are you sure you want to delete this user?\')">Delete</button>
+        </form>
     </td>';
         echo '</tr>';
     }
