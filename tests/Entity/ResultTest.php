@@ -1,148 +1,52 @@
 <?php
 
-/**
- * tests/Entity/ResultTest.php
- *
- * @category EntityTests
- * @package  MiW\Results\Tests
- * @license  https://opensource.org/licenses/MIT MIT License
- * @link     https://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
- */
+use MiW\Results\Entity\Result;
+use MiW\Results\Entity\User;
+use PHPUnit\Framework\TestCase;
 
-namespace MiW\Results\Tests\Entity;
-
-use MiW\Results\Entity\{ Result, User };
-
-/**
- * Class ResultTest
- *
- * @package MiW\Results\Tests\Entity
- */
-class ResultTest extends \PHPUnit\Framework\TestCase
+class ResultTest extends TestCase
 {
+    private Result $result;
     private User $user;
 
-    private Result $result;
-
-    private const USERNAME = 'uSeR ñ¿?Ñ';
-    private const POINTS = 2025;
-
-    private \DateTime $time;
-
-    /**
-     * Sets up the fixture.
-     * This method is called before a test is executed.
-     *
-     * @return void
-     */
     protected function setUp(): void
     {
-        $this->user = new User();
-        $this->user->setUsername(self::USERNAME);
-        $this->time = new \DateTime('now');
-        $this->result = new Result(
-            self::POINTS,
-            $this->user,
-            $this->time
-        );
+        $this->user = new User('testuser', 'test@example.com', 'password123', true, false);
+        $this->result = new Result(100, $this->user, new DateTime('2023-01-01 00:00:00'));
     }
 
-    /**
-     * Implement testConstructor
-     *
-     * @covers \MiW\Results\Entity\Result::__construct()
-     * @covers \MiW\Results\Entity\Result::getId()
-     * @covers \MiW\Results\Entity\Result::getResult()
-     * @covers \MiW\Results\Entity\Result::getUser()
-     * @covers \MiW\Results\Entity\Result::getTime()
-     *
-     * @return void
-     */
-    public function testConstructor(): void
+    public function testGetResult(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals(100, $this->result->getResult());
     }
 
-    /**
-     * Implement testGet_Id().
-     *
-     * @covers \MiW\Results\Entity\Result::getId()
-     * @return void
-     */
-    public function testGetId():void
+    public function testSetResult(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->result->setResult(200);
+        $this->assertEquals(200, $this->result->getResult());
     }
 
-    /**
-     * Implement testUsername().
-     *
-     * @covers \MiW\Results\Entity\Result::setResult
-     * @covers \MiW\Results\Entity\Result::getResult
-     * @return void
-     */
-    public function testResult(): void
+    public function testGetUser(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals($this->user, $this->result->getUser());
     }
 
-    /**
-     * Implement testUser().
-     *
-     * @covers \MiW\Results\Entity\Result::setUser()
-     * @covers \MiW\Results\Entity\Result::getUser()
-     * @return void
-     */
-    public function testUser(): void
+    public function testSetUser(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $newUser = new User('newuser', 'new@example.com', 'newpassword', false, true);
+        $this->result->setUser($newUser);
+        $this->assertEquals($newUser, $this->result->getUser());
     }
 
-    /**
-     * Implement testTime().
-     *
-     * @covers \MiW\Results\Entity\Result::setTime
-     * @covers \MiW\Results\Entity\Result::getTime
-     * @return void
-     */
-    public function testTime(): void
+    public function testGetTime(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('2023-01-01 00:00:00', $this->result->getTime()->format('Y-m-d H:i:s'));
     }
 
-    /**
-     * Implement testTo_String().
-     *
-     * @covers \MiW\Results\Entity\Result::__toString
-     * @return void
-     */
-    public function testToString(): void
+    public function testSetTime(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * Implement testJson_Serialize().
-     *
-     * @covers \MiW\Results\Entity\Result::jsonSerialize
-     * @return void
-     */
-    public function testJsonSerialize(): void
-    {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $newTime = new DateTime('2023-12-31 23:59:59');
+        $this->result->setTime($newTime);
+        $this->assertEquals('2023-12-31 23:59:59', $this->result->getTime()->format('Y-m-d H:i:s'));
     }
 }

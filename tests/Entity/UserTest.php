@@ -1,129 +1,69 @@
 <?php
 
-/**
- * tests/Entity/UserTest.php
- *
- * @category EntityTests
- * @package  MiW\Results\Tests
- * @license  https://opensource.org/licenses/MIT MIT License
- * @link     https://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
- */
-
-namespace MiW\Results\Tests\Entity;
-
 use MiW\Results\Entity\User;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class UserTest
- *
- * @package MiW\Results\Tests\Entity
- * @group   users
- */
-class UserTest extends \PHPUnit\Framework\TestCase
+class UserTest extends TestCase
 {
     private User $user;
 
-    /**
-     * Sets up the fixture.
-     * This method is called before a test is executed.
-     */
     protected function setUp(): void
     {
-        $this->user = new User();
+        $this->user = new User('testuser', 'test@example.com', 'password123', true, false);
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::__construct()
-     */
-    public function testConstructor(): void
+    public function testGetUsername(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('testuser', $this->user->getUsername());
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::getId()
-     */
-    public function testGetId(): void
+    public function testSetUsername(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->user->setUsername('newuser');
+        $this->assertEquals('newuser', $this->user->getUsername());
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::setUsername()
-     * @covers \MiW\Results\Entity\User::getUsername()
-     */
-    public function testGetSetUsername(): void
+    public function testGetEmail(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('test@example.com', $this->user->getEmail());
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::getEmail()
-     * @covers \MiW\Results\Entity\User::setEmail()
-     */
-    public function testGetSetEmail(): void
+    public function testSetEmail(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->user->setEmail('new@example.com');
+        $this->assertEquals('new@example.com', $this->user->getEmail());
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::setEnabled()
-     * @covers \MiW\Results\Entity\User::isEnabled()
-     */
-    public function testIsSetEnabled(): void
+    public function testPasswordHashing(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->user->validatePassword('password123'));
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::setIsAdmin()
-     * @covers \MiW\Results\Entity\User::isAdmin
-     */
-    public function testIsSetAdmin(): void
+    public function testSetPassword(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->user->setPassword('newpassword');
+        $this->assertTrue($this->user->validatePassword('newpassword'));
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::setPassword()
-     * @covers \MiW\Results\Entity\User::validatePassword()
-     */
-    public function testSetValidatePassword(): void
+    public function testIsEnabled(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->user->isEnabled());
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::__toString()
-     */
-    public function testToString(): void
+    public function testSetEnabled(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->user->setEnabled(false);
+        $this->assertFalse($this->user->isEnabled());
     }
 
-    /**
-     * @covers \MiW\Results\Entity\User::jsonSerialize()
-     */
-    public function testJsonSerialize(): void
+    public function testIsAdmin(): void
     {
-        self::markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->user->isAdmin());
+    }
+
+    public function testSetIsAdmin(): void
+    {
+        $this->user->setIsAdmin(true);
+        $this->assertTrue($this->user->isAdmin());
     }
 }

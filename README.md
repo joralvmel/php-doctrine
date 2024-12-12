@@ -27,12 +27,14 @@ como `./.env.local`. Después se debe editar dicho fichero y modificar las varia
 pueden quedar como comentarios). Una vez editado el anterior fichero y desde el directorio raíz del
 proyecto se deben ejecutar los comandos:
 ```
-$ composer update
-$ ./bin/doctrine orm:schema-tool:update --dump-sql --force
+composer update
+```
+```
+php ./bin/doctrine.php orm:schema-tool:update --dump-sql --force
 ```
 Para verificar la validez de la información de mapeo y la sincronización con la base de datos:
 ```
-$ ./bin/doctrine orm:validate-schema
+php ./bin/doctrine.php orm:validate-schema
 ```
 
 ## 🗄️ Estructura del proyecto:
@@ -59,7 +61,7 @@ A continuación se describe el contenido y estructura del proyecto:
 Para acceder a la aplicación utilizando el servidor interno del intérprete
 de PHP se ejecutará el comando:
 ```
-$ php -S 127.0.0.1:8000 -t public
+php -S 127.0.0.1:8000 -t public
 ```
 
 Una vez hecho esto, la aplicación estará disponible en [http://127.0.0.1:8000/][lh].
@@ -76,7 +78,7 @@ y renombrarla como `./phpunit.xml`. A continuación se debe editar dicho fichero
 mismos parámetros (`DATABASE_NAME`, `DATABASE_USER` y `DATABASE_PASSWD`) que en la fase de
 instalación con los valores apropiados. Para lanzar la suite de pruebas se debe ejecutar:
 ```
-$ ./bin/phpunit [--testdox] [--coverage-text] [-v]
+php ./bin/phpunit --testdox --coverage-text
 ```
 
 [12factor]: https://www.12factor.net/es/
