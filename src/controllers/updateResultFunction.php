@@ -10,7 +10,8 @@ function updateResultFunction(int $id): void
     $result = $resultRepository->find($id);
 
     if ($result === null) {
-        echo 'Result not found';
+        echo '<div>Result not found</div>';
+        echo '<button onclick="location.href=\'/results\'">Back</button>';
         return;
     }
 
@@ -28,15 +29,42 @@ function updateResultFunction(int $id): void
         $result->setTime(new \DateTime($_POST['time']));
 
         $entityManager->flush();
-        echo 'Result updated successfully';
+
+        echo '<div>Result updated successfully</div>';
+        echo '<button onclick="location.href=\'/results\'">Back</button>';
     } else {
         echo <<<FORM
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="/styles/styles.css">
+            <title>Update Result</title>
+        </head>
+        <body>
         <form method="post" action="/results/update/{$id}">
-            Result: <input type="number" name="result" value="{$result->getResult()}" required><br>
-            User ID: <input type="number" name="user_id" value="{$result->getUser()->getId()}" required><br>
-            Time: <input type="datetime-local" name="time" value="{$result->getTime()->format('Y-m-d\TH:i')}" required><br>
-            <input type="submit" value="Update Result">
+            <div>
+                <label for="result">Result:</label>
+                <input type="number" id="result" name="result" value="{$result->getResult()}" required>
+            </div>
+            <div>
+                <label for="user_id">User ID:</label>
+                <input type="number" id="user_id" name="user_id" value="{$result->getUser()->getId()}" required>
+            </div>
+            <div>
+                <label for="time">Time:</label>
+                <input type="datetime-local" id="time" name="time" value="{$result->getTime()->format('Y-m-d\TH:i')}" required>
+            </div>
+            <div>
+                <input type="submit" value="Update Result">
+            </div>
         </form>
+        <div class="buttons">
+            <button onclick="location.href='/results'">Back</button>
+        </div>
+        </body>
+        </html>
         FORM;
     }
 }

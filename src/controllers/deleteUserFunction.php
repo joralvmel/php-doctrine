@@ -17,5 +17,6 @@ function deleteUserFunction(int $id): void
 
     $entityManager->remove($user);
     $entityManager->flush();
-    echo 'User deleted successfully';
+    echo '<div>User deleted successfully</div>';
+    echo '<button onclick="location.href=\'/users\'">Back</button>';
 }

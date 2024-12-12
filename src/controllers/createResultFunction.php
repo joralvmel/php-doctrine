@@ -1,6 +1,5 @@
 <?php
 
-
 use MiW\Results\Entity\Result;
 use MiW\Results\Entity\User;
 use MiW\Results\Utility\DoctrineConnector;
@@ -14,17 +13,17 @@ function createResultFunction(): void
         $user = $userRepository->find($_POST['user_id']);
 
         if ($user === null) {
-            echo 'Error: User not found';
+            echo '<div>Error: User not found</div>';
+            echo '<button onclick="location.href=\'/results\'">Back</button>';
             return;
         }
 
-        // Validate result and time
         if (empty($_POST['result']) || empty($_POST['time'])) {
-            echo 'Error: Please provide valid result and time';
+            echo '<div>Error: Please provide valid result and time</div>';
+            echo '<button onclick="location.href=\'/results\'">Back</button>';
             return;
         }
 
-        // Create and persist the result
         $result = new Result();
         $result->setResult($_POST['result']);
         $result->setUser($user);
@@ -33,15 +32,41 @@ function createResultFunction(): void
         $entityManager->persist($result);
         $entityManager->flush();
 
-        echo 'Result created successfully with ID: ' . $result->getId();
+        echo '<div>Result created successfully</div>';
+        echo '<button onclick="location.href=\'/results\'">Back</button>';
     } else {
         echo <<<FORM
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="/styles/styles.css">
+            <title>Create Result</title>
+        </head>
+        <body>
         <form method="post" action="/results/create">
-            Result: <input type="number" name="result" required><br>
-            User ID: <input type="number" name="user_id" required><br>
-            Time: <input type="datetime-local" name="time" required><br>
-            <input type="submit" value="Create Result">
+            <div>
+                <label for="result">Result:</label>
+                <input type="number" id="result" name="result" required>
+            </div>
+            <div>
+                <label for="user_id">User ID:</label>
+                <input type="number" id="user_id" name="user_id" required>
+            </div>
+            <div>
+                <label for="time">Time:</label>
+                <input type="datetime-local" id="time" name="time" required>
+            </div>
+            <div>
+                <input type="submit" value="Create Result">
+            </div>
         </form>
+        <div class="buttons">
+            <button onclick="location.href='/results'">Back</button>
+        </div>
+        </body>
+        </html>
         FORM;
     }
 }

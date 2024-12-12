@@ -1,6 +1,5 @@
 <?php
 
-
 use MiW\Results\Entity\User;
 use MiW\Results\Utility\DoctrineConnector;
 
@@ -11,7 +10,8 @@ function updateUserFunction(int $id): void
     $user = $userRepository->find($id);
 
     if ($user === null) {
-        echo 'User not found';
+        echo '<div>User not found</div>';
+        echo '<button onclick="location.href=\'/users\'">Back</button>';
         return;
     }
 
@@ -23,15 +23,41 @@ function updateUserFunction(int $id): void
         }
 
         $entityManager->flush();
-        echo 'User updated successfully';
+        echo '<div>User updated successfully</div>';
+        echo '<button onclick="location.href=\'/users\'">Back</button>';
     } else {
         echo <<<FORM
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="/styles/styles.css">
+            <title>Update User</title>
+        </head>
+        <body>
         <form method="post" action="/users/update/{$id}">
-            Username: <input type="text" name="username" value="{$user->getUsername()}"><br>
-            Email: <input type="text" name="email" value="{$user->getEmail()}"><br>
-            Password: <input type="password" name="password"><br>
-            <input type="submit" value="Update User">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{$user->getUsername()}" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{$user->getEmail()}" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div>
+                <input type="submit" value="Update User">
+            </div>
         </form>
+        <div class="buttons">
+            <button onclick="location.href='/users'">Back</button>
+        </div>
+        </body>
+        </html>
         FORM;
     }
 }

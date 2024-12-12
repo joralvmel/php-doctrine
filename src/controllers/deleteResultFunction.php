@@ -15,5 +15,6 @@ function deleteResultFunction(int $id): void
 
     $entityManager->remove($result);
     $entityManager->flush();
-    echo 'Result deleted successfully';
+    echo '<div>Result deleted successfully</div>';
+    echo '<button onclick="location.href=\'/results\'">Back</button>';
 }
