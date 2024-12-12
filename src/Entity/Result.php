@@ -47,7 +47,7 @@ class Result implements JsonSerializable, Stringable
         referencedColumnName: 'id',
         onDelete: 'CASCADE'
     )]
-    protected User $user;
+    protected ?User $user;
 
     #[ORM\Column(
         name: 'time',

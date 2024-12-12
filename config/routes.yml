@@ -1,4 +1,4 @@
-# rutas.yml
+# routes.yml
 ---
 root_route:
     path:     /
@@ -38,6 +38,11 @@ result_list_route:
     path: /results
     controller: 'listResultsFunction'
     methods: [ GET ]
+
+result_create_route:
+    path: /results/create
+    controller: 'createResultFunction'
+    methods: [ GET, POST ]
 
 result_route:
     path: /results/{id}
