@@ -33,3 +33,13 @@ user_delete_route:
     path: /users/delete/{id}
     controller: 'deleteUserFunction'
     methods: [ DELETE, POST ]
+
+result_list_route:
+    path: /results
+    controller: 'listResultsFunction'
+    methods: [ GET ]
+
+result_route:
+    path: /results/{id}
+    controller: 'resultFunction'
+    methods: [ GET ]

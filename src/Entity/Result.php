@@ -71,7 +71,7 @@ class Result implements JsonSerializable, Stringable
         $this->id     = 0;
         $this->result = $result;
         $this->user   = $user;
-        $this->time   = $time;
+        $this->time   = $time ?? new DateTime();
     }
 
     /**
@@ -80,6 +80,30 @@ class Result implements JsonSerializable, Stringable
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResult(): int
+    {
+        return $this->result;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getTime(): DateTime
+    {
+        return $this->time;
     }
 
     /**
@@ -103,8 +127,7 @@ class Result implements JsonSerializable, Stringable
      * Specify data which should be serialized to JSON
      *
      * @link   http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
+     * @return mixed data which can be serialized by <b>json_encode</b> or other means.
      * @since  5.4.0
      */
     public function jsonSerialize(): array
@@ -112,21 +135,36 @@ class Result implements JsonSerializable, Stringable
         return [
             'id'     => $this->id,
             'result' => $this->result,
-            'user'   => $this->user,
+            'user'   => $this->user->jsonSerialize(), // Assuming User entity has jsonSerialize()
             'time'   => $this->time->format('Y-m-d H:i:s')
         ];
     }
 
+    /**
+     * Set result value.
+     *
+     * @param int $result
+     */
     public function setResult(int $result): void
     {
         $this->result = $result;
     }
 
+    /**
+     * Set user.
+     *
+     * @param User $user
+     */
     public function setUser(User $user): void
     {
         $this->user = $user;
     }
 
+    /**
+     * Set time.
+     *
+     * @param DateTime $time
+     */
     public function setTime(DateTime $time): void
     {
         $this->time = $time;

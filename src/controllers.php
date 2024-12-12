@@ -8,15 +8,18 @@
  */
 
 use MiW\Results\Entity\User;
+use MiW\Results\Entity\Result;
 use MiW\Results\Utility\DoctrineConnector;
 
 function homePageFunction(): void
 {
     global $routes;
-    $listRoute = $routes->get('user_list_route')->getPath();
+    $listUserRoute = $routes->get('user_list_route')->getPath();
+    $listResultRoute = $routes->get('result_list_route')->getPath();
     echo <<< MARCA_FIN
     <ul>
-        <li><a href="$listRoute">User List</a></li>
+        <li><a href="$listUserRoute">User List</a></li>
+        <li><a href="$listResultRoute">Result List</a></li>
     </ul>
     MARCA_FIN;
 }
@@ -152,4 +155,60 @@ function deleteUserFunction(int $id): void
     $entityManager->remove($user);
     $entityManager->flush();
     echo 'User deleted successfully';
+}
+
+function listResultsFunction(): void
+{
+    $entityManager = DoctrineConnector::getEntityManager();
+    $resultRepository = $entityManager->getRepository(Result::class);
+    $results = $resultRepository->findAll();
+
+    echo '<table>';
+    echo '<tr><th>ID</th><th>Result</th><th>User</th><th>Time</th><th>Actions</th></tr>';
+    foreach ($results as $result) {
+        $updateUrl = "/results/update/" . $result->getId();
+        $viewUrl = "/results/" . $result->getId();
+        $deleteUrl = "/results/delete/" . $result->getId();
+
+        echo '<tr>';
+        echo '<td>' . $result->getId() . '</td>';
+        echo '<td>' . $result->getResult() . '</td>';
+        echo '<td>' . $result->getUser()->getUsername() . '</td>';
+        echo '<td>' . $result->getTime()->format('Y-m-d H:i:s') . '</td>';
+        echo '<td>
+        <button onclick="location.href=\'' . $viewUrl . '\'">Read</button>
+        <button onclick="location.href=\'' . $updateUrl . '\'">Update</button>
+        <button onclick="if(confirm(\'Are you sure you want to delete this result?\')) location.href=\'' . $deleteUrl . '\'">Delete</button>
+    </td>';
+        echo '</tr>';
+    }
+    echo '</table>';
+
+    $createRoute = '/results/create';
+    echo <<<HTML
+    <br>
+    <button onclick="location.href='$createRoute'">Create Result</button>
+    HTML;
+}
+
+function resultFunction(int $id): void
+{
+    $entityManager = DoctrineConnector::getEntityManager();
+    $resultRepository = $entityManager->getRepository(Result::class);
+    $result = $resultRepository->find($id);
+
+    if ($result === null) {
+        echo 'Result not found';
+        return;
+    }
+
+    echo '<table>';
+    echo '<tr><th>ID</th><th>Result</th><th>User</th><th>Time</th></tr>';
+    echo '<tr>';
+    echo '<td>' . $result->getId() . '</td>';
+    echo '<td>' . $result->getResult() . '</td>';
+    echo '<td>' . $result->getUser()->getUsername() . '</td>';
+    echo '<td>' . $result->getTime()->format('Y-m-d H:i:s') . '</td>';
+    echo '</tr>';
+    echo '</table>';
 }
