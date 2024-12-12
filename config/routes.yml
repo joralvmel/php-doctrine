@@ -48,3 +48,8 @@ result_route:
     path: /results/{id}
     controller: 'resultFunction'
     methods: [ GET ]
+
+result_update_route:
+    path: /results/update/{id}
+    controller: 'updateResultFunction'
+    methods: [ GET, POST ]
