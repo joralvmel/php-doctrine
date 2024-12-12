@@ -24,7 +24,6 @@ user_route:
     methods:
         - GET
 
-
 user_update_route:
     path: /users/update/{id}
     controller: 'updateUserFunction'

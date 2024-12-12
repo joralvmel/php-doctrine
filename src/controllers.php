@@ -38,11 +38,9 @@ function listUsersFunction(): void
         echo '<td>' . $user->getId() . '</td>';
         echo '<td>' . $user->getUsername() . '</td>';
         echo '<td>
-        <a href="' . $viewUrl . '">Read</a> | 
-        <a href="' . $updateUrl . '">Update</a> |
-        <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-            <button type="submit" onclick="return confirm(\'Are you sure you want to delete this user?\')">Delete</button>
-        </form>
+        <button onclick="location.href=\'' . $viewUrl . '\'">Read</button>
+        <button onclick="location.href=\'' . $updateUrl . '\'">Update</button>
+        <button onclick="if(confirm(\'Are you sure you want to delete this user?\')) location.href=\'' . $deleteUrl . '\'">Delete</button>
     </td>';
         echo '</tr>';
     }
@@ -51,7 +49,7 @@ function listUsersFunction(): void
     $createRoute = '/users/create';
     echo <<<HTML
     <br>
-    <a href="$createRoute">Create User</a>
+    <button onclick="location.href='$createRoute'">Create User</button>
     HTML;
 }
 
