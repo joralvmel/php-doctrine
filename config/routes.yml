@@ -53,3 +53,8 @@ result_update_route:
     path: /results/update/{id}
     controller: 'updateResultFunction'
     methods: [ GET, POST ]
+
+result_delete_route:
+    path: /results/delete/{id}
+    controller: 'deleteResultFunction'
+    methods: [ DELETE, POST ]

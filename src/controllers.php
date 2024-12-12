@@ -180,7 +180,9 @@ function listResultsFunction(): void
         echo '<td>
         <button onclick="location.href=\'' . $viewUrl . '\'">Read</button>
         <button onclick="location.href=\'' . $updateUrl . '\'">Update</button>
-        <button onclick="if(confirm(\'Are you sure you want to delete this result?\')) location.href=\'' . $deleteUrl . '\'">Delete</button>
+         <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm(\'Are you sure you want to delete this result?\')">Delete</button>
+        </form>
     </td>';
         echo '</tr>';
     }
@@ -294,3 +296,18 @@ function updateResultFunction(int $id): void
     }
 }
 
+function deleteResultFunction(int $id): void
+{
+    $entityManager = DoctrineConnector::getEntityManager();
+    $resultRepository = $entityManager->getRepository(Result::class);
+    $result = $resultRepository->find($id);
+
+    if ($result === null) {
+        echo 'Result not found';
+        return;
+    }
+
+    $entityManager->remove($result);
+    $entityManager->flush();
+    echo 'Result deleted successfully';
+}
